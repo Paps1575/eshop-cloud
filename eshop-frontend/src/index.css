@@ -1,0 +1,266 @@
+:root {
+  color: #1f2937;
+  background: #f7f4ee;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  border: 0;
+  border-radius: 999px;
+  background: #111827;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 700;
+  padding: 0.8rem 1rem;
+}
+
+button:hover {
+  background: #374151;
+}
+
+button.secondary {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.app-shell {
+  margin: 0 auto;
+  max-width: 1180px;
+  padding: 2rem;
+}
+
+.hero {
+  align-items: end;
+  background: #f97316;
+  border-radius: 28px;
+  color: #fff7ed;
+  display: flex;
+  gap: 2rem;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  padding: 2rem;
+}
+
+.hero h1 {
+  color: #fff;
+  font-size: clamp(2.5rem, 6vw, 5.25rem);
+  line-height: 0.95;
+  margin: 0.35rem 0 0.75rem;
+}
+
+.hero p {
+  max-width: 680px;
+}
+
+.eyebrow,
+.section-heading span {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.user-box {
+  display: grid;
+  font-weight: 800;
+  gap: 0.5rem;
+  min-width: 240px;
+}
+
+.user-box input,
+.basket-item input {
+  border: 2px solid transparent;
+  border-radius: 16px;
+  padding: 0.75rem;
+}
+
+.content-grid {
+  align-items: start;
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: minmax(0, 1fr) 360px;
+}
+
+.panel {
+  background: #fffaf2;
+  border: 1px solid #eadfce;
+  border-radius: 28px;
+  box-shadow: 0 18px 45px rgba(67, 43, 22, 0.08);
+  padding: 1.25rem;
+}
+
+.section-heading {
+  margin-bottom: 1rem;
+}
+
+.section-heading h2 {
+  color: #111827;
+  font-size: 1.6rem;
+  margin: 0.2rem 0 0;
+}
+
+.section-heading span {
+  color: #ea580c;
+}
+
+.product-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+}
+
+.product-card {
+  background: #fff;
+  border: 1px solid #f1e6d6;
+  border-radius: 22px;
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.product-image {
+  align-items: center;
+  background: #f3f4f6;
+  border-radius: 18px;
+  color: #6b7280;
+  display: flex;
+  height: 150px;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.product-image img {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.product-info h3,
+.basket-item h3 {
+  color: #111827;
+  margin: 0;
+}
+
+.product-info p,
+.basket-item p,
+.message {
+  color: #6b7280;
+  margin: 0.35rem 0;
+}
+
+.categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.75rem 0;
+}
+
+.categories span {
+  background: #ffedd5;
+  border-radius: 999px;
+  color: #9a3412;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.25rem 0.55rem;
+}
+
+.basket-panel {
+  position: sticky;
+  top: 1rem;
+}
+
+.basket-items {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.basket-item {
+  background: #fff;
+  border: 1px solid #f1e6d6;
+  border-radius: 18px;
+  display: grid;
+  gap: 0.75rem;
+  padding: 1rem;
+}
+
+.basket-item label {
+  color: #6b7280;
+  display: grid;
+  font-size: 0.9rem;
+  gap: 0.35rem;
+}
+
+.basket-total {
+  align-items: center;
+  border-top: 1px solid #eadfce;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  padding-top: 1rem;
+}
+
+.basket-total strong {
+  color: #111827;
+  font-size: 1.5rem;
+}
+
+.basket-actions {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: 1fr 0.6fr;
+  margin-top: 1rem;
+}
+
+.message {
+  background: #fff;
+  border-radius: 16px;
+  padding: 1rem;
+}
+
+.message.error {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.message.success {
+  background: #ecfdf5;
+  color: #047857;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 860px) {
+  .app-shell {
+    padding: 1rem;
+  }
+
+  .hero,
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero {
+    align-items: stretch;
+    display: grid;
+  }
+
+  .basket-panel {
+    position: static;
+  }
+}
