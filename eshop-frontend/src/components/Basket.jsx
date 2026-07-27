@@ -18,7 +18,7 @@ function Basket({ cart, userName, onQuantityChange, onClearBasket, onSaved }) {
       await saveBasket({ ...cart, userName })
       onSaved('Cesta guardada correctamente en Basket.API.')
     } catch {
-      onSaved('No se pudo guardar la cesta. Verifica que Basket.API este en http://localhost:8082.')
+      onSaved('No se pudo guardar la cesta. Verifica que Basket.API este disponible en Render.')
     }
   }
 

@@ -5,7 +5,7 @@ const catalogApi = axios.create({
 })
 
 const basketApi = axios.create({
-  baseURL: import.meta.env.VITE_BASKET_URL,
+  baseURL: import.meta.env.VITE_BASKET_URL || 'https://basket-api-b1ub.onrender.com',
 })
 
 export async function getProducts() {
