@@ -12,7 +12,7 @@ function ProductList({ onAddToBasket }) {
         const data = await getProducts()
         setProducts(data)
       } catch {
-        setError('No se pudo cargar el catalogo. Verifica que Catalog.API este en http://localhost:8080.')
+        setError('No se pudo cargar el catalogo de productos. Intenta nuevamente en unos minutos.')
       } finally {
         setIsLoading(false)
       }
@@ -32,8 +32,8 @@ function ProductList({ onAddToBasket }) {
   return (
     <section className="panel">
       <div className="section-heading">
-        <span>Catalog.API</span>
-        <h2>Catalogo de productos</h2>
+        <span>Coleccion</span>
+        <h2>Catalogo</h2>
       </div>
 
       <div className="product-grid">

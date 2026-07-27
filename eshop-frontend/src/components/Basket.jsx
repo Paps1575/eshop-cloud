@@ -16,16 +16,16 @@ function Basket({ cart, userName, onQuantityChange, onClearBasket, onSaved }) {
 
     try {
       await saveBasket({ ...cart, userName })
-      onSaved('Cesta guardada correctamente en Basket.API.')
+      onSaved('Cesta guardada correctamente.')
     } catch {
-      onSaved('No se pudo guardar la cesta. Verifica que Basket.API este disponible en Render.')
+      onSaved('No se pudo guardar la cesta. Intenta nuevamente en unos minutos.')
     }
   }
 
   return (
     <aside className="panel basket-panel">
       <div className="section-heading">
-        <span>Basket.API</span>
+        <span>Resumen</span>
         <h2>Cesta</h2>
       </div>
 
@@ -54,7 +54,7 @@ function Basket({ cart, userName, onQuantityChange, onClearBasket, onSaved }) {
       )}
 
       <div className="basket-total">
-        <span>TotalPrice</span>
+        <span>Total</span>
         <strong>${totalPrice.toFixed(2)}</strong>
       </div>
 

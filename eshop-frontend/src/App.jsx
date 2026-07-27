@@ -62,14 +62,11 @@ function App() {
     <main className="app-shell">
       <header className="hero">
         <div>
-          <span className="eyebrow">React + Catalog.API + Basket.API</span>
-          <h1>eShop Frontend</h1>
-          <p>
-            Flujo simple para el video: cargar productos, agregarlos a la cesta y guardar la cesta.
-          </p>
+          <h1>eShop Cloud</h1>
+          <p>Productos seleccionados con una experiencia de compra simple y segura.</p>
         </div>
         <label className="user-box">
-          Usuario de la cesta
+          Cliente
           <input
             value={userName}
             onChange={(event) => {

@@ -1,6 +1,6 @@
 :root {
-  color: #1f2937;
-  background: #f7f4ee;
+  color: #172033;
+  background: #f5f8fc;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -23,34 +23,42 @@ input {
 
 button {
   border: 0;
-  border-radius: 999px;
-  background: #111827;
+  border-radius: 12px;
+  background: #0b5ed7;
+  box-shadow: 0 10px 24px rgba(11, 94, 215, 0.18);
   color: #fff;
   cursor: pointer;
   font-weight: 700;
-  padding: 0.8rem 1rem;
+  letter-spacing: 0.01em;
+  padding: 0.78rem 1rem;
+  transition: background 160ms ease, box-shadow 160ms ease, transform 160ms ease;
 }
 
 button:hover {
-  background: #374151;
+  background: #084aa8;
+  box-shadow: 0 12px 28px rgba(11, 94, 215, 0.24);
+  transform: translateY(-1px);
 }
 
 button.secondary {
-  background: #e5e7eb;
-  color: #111827;
+  background: #e8f1ff;
+  box-shadow: none;
+  color: #0b5ed7;
 }
 
 .app-shell {
   margin: 0 auto;
-  max-width: 1180px;
-  padding: 2rem;
+  max-width: 1200px;
+  padding: 2.25rem;
 }
 
 .hero {
-  align-items: end;
-  background: #f97316;
-  border-radius: 28px;
-  color: #fff7ed;
+  align-items: center;
+  background: linear-gradient(135deg, #0a3678 0%, #0b5ed7 100%);
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  border-radius: 24px;
+  box-shadow: 0 24px 52px rgba(15, 71, 138, 0.16);
+  color: #dbeafe;
   display: flex;
   gap: 2rem;
   justify-content: space-between;
@@ -60,20 +68,21 @@ button.secondary {
 
 .hero h1 {
   color: #fff;
-  font-size: clamp(2.5rem, 6vw, 5.25rem);
-  line-height: 0.95;
-  margin: 0.35rem 0 0.75rem;
+  font-size: clamp(2.35rem, 5vw, 4.65rem);
+  letter-spacing: -0.055em;
+  line-height: 0.96;
+  margin: 0 0 0.75rem;
 }
 
 .hero p {
   max-width: 680px;
+  margin: 0;
 }
 
-.eyebrow,
 .section-heading span {
   font-size: 0.78rem;
   font-weight: 800;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
@@ -86,9 +95,18 @@ button.secondary {
 
 .user-box input,
 .basket-item input {
-  border: 2px solid transparent;
-  border-radius: 16px;
+  background: #fff;
+  border: 1px solid #cfe0f6;
+  border-radius: 12px;
+  color: #172033;
+  outline: none;
   padding: 0.75rem;
+}
+
+.user-box input:focus,
+.basket-item input:focus {
+  border-color: #0b5ed7;
+  box-shadow: 0 0 0 4px rgba(11, 94, 215, 0.12);
 }
 
 .content-grid {
@@ -99,11 +117,11 @@ button.secondary {
 }
 
 .panel {
-  background: #fffaf2;
-  border: 1px solid #eadfce;
-  border-radius: 28px;
-  box-shadow: 0 18px 45px rgba(67, 43, 22, 0.08);
-  padding: 1.25rem;
+  background: #fff;
+  border: 1px solid #e3ecf7;
+  border-radius: 22px;
+  box-shadow: 0 18px 45px rgba(15, 71, 138, 0.08);
+  padding: 1.35rem;
 }
 
 .section-heading {
@@ -111,13 +129,14 @@ button.secondary {
 }
 
 .section-heading h2 {
-  color: #111827;
+  color: #0f1f38;
   font-size: 1.6rem;
-  margin: 0.2rem 0 0;
+  letter-spacing: -0.03em;
+  margin: 0.15rem 0 0;
 }
 
 .section-heading span {
-  color: #ea580c;
+  color: #0b5ed7;
 }
 
 .product-grid {
@@ -128,18 +147,26 @@ button.secondary {
 
 .product-card {
   background: #fff;
-  border: 1px solid #f1e6d6;
-  border-radius: 22px;
+  border: 1px solid #e5eef8;
+  border-radius: 18px;
+  box-shadow: 0 10px 26px rgba(15, 71, 138, 0.06);
   display: grid;
   gap: 1rem;
   padding: 1rem;
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.product-card:hover {
+  border-color: #b8d2f3;
+  box-shadow: 0 18px 36px rgba(15, 71, 138, 0.12);
+  transform: translateY(-2px);
 }
 
 .product-image {
   align-items: center;
-  background: #f3f4f6;
-  border-radius: 18px;
-  color: #6b7280;
+  background: #eef5ff;
+  border-radius: 14px;
+  color: #64748b;
   display: flex;
   height: 150px;
   justify-content: center;
@@ -154,14 +181,14 @@ button.secondary {
 
 .product-info h3,
 .basket-item h3 {
-  color: #111827;
+  color: #0f1f38;
   margin: 0;
 }
 
 .product-info p,
 .basket-item p,
 .message {
-  color: #6b7280;
+  color: #64748b;
   margin: 0.35rem 0;
 }
 
@@ -173,9 +200,9 @@ button.secondary {
 }
 
 .categories span {
-  background: #ffedd5;
+  background: #e8f1ff;
   border-radius: 999px;
-  color: #9a3412;
+  color: #0b5ed7;
   font-size: 0.8rem;
   font-weight: 700;
   padding: 0.25rem 0.55rem;
@@ -193,15 +220,15 @@ button.secondary {
 
 .basket-item {
   background: #fff;
-  border: 1px solid #f1e6d6;
-  border-radius: 18px;
+  border: 1px solid #e5eef8;
+  border-radius: 16px;
   display: grid;
   gap: 0.75rem;
   padding: 1rem;
 }
 
 .basket-item label {
-  color: #6b7280;
+  color: #64748b;
   display: grid;
   font-size: 0.9rem;
   gap: 0.35rem;
@@ -209,7 +236,7 @@ button.secondary {
 
 .basket-total {
   align-items: center;
-  border-top: 1px solid #eadfce;
+  border-top: 1px solid #e3ecf7;
   display: flex;
   justify-content: space-between;
   margin-top: 1rem;
@@ -217,7 +244,7 @@ button.secondary {
 }
 
 .basket-total strong {
-  color: #111827;
+  color: #0b5ed7;
   font-size: 1.5rem;
 }
 
@@ -230,18 +257,21 @@ button.secondary {
 
 .message {
   background: #fff;
-  border-radius: 16px;
+  border: 1px solid #e3ecf7;
+  border-radius: 14px;
   padding: 1rem;
 }
 
 .message.error {
   background: #fef2f2;
+  border-color: #fecaca;
   color: #b91c1c;
 }
 
 .message.success {
-  background: #ecfdf5;
-  color: #047857;
+  background: #eff6ff;
+  border-color: #bfdbfe;
+  color: #0b5ed7;
   margin-bottom: 1rem;
 }
 
