@@ -90,9 +90,6 @@ function Basket({ cart, userName, onQuantityChange, onClearBasket, onCheckoutSuc
       </div>
 
       <div className="basket-actions">
-        <button className="secondary" type="button" onClick={handleSaveBasket} disabled={isBusy}>
-          {pendingAction === 'save' ? 'Guardando...' : 'Guardar cesta'}
-        </button>
         <button className="checkout-button" type="button" onClick={handleCheckout} disabled={isBusy}>
           {pendingAction === 'checkout' ? 'Procesando...' : 'Realizar compra'}
         </button>
