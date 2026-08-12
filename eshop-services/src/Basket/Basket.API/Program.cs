@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Caching.Distributed;
 
 var builder = WebApplication.CreateBuilder(args);
-
+//1
 builder.Services.AddCarter();
 builder.Services.AddMediatR(cfg =>
 {
@@ -18,7 +18,7 @@ builder.Services.AddMediatR(cfg =>
 });
 builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 
-
+//2
 builder.Services.AddMarten(opts =>
 {
     opts.Connection(builder.Configuration.GetConnectionString("Database")!);
@@ -27,8 +27,10 @@ builder.Services.AddMarten(opts =>
 
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 
-//aqui agregams el patron de dise�o decorador mediante la libreria scrutor, configuramos redis para cache distri
+
 builder.Services.Decorate<IBasketRepository, CacheBasketRepository>();
+
+//3
 builder.Services.AddStackExchangeRedisCache(options =>
 {
     options.Configuration = builder.Configuration.GetConnectionString("Redis");
@@ -58,6 +60,8 @@ builder.Services.AddCors(options =>
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 builder.Services.AddProblemDetails();
 
+
+//4
 builder.Services.AddHealthChecks()
     .AddNpgSql(builder.Configuration.GetConnectionString("Database")!)
     .AddRedis(builder.Configuration.GetConnectionString("Redis")!);

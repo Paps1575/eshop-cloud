@@ -3,7 +3,7 @@ using Catalog.API.Exceptions;
 using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
-
+//1
 builder.Services.AddMediatR(cfg =>
 {
     cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);
@@ -12,11 +12,14 @@ builder.Services.AddMediatR(cfg =>
 builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 builder.Services.AddCarter();
 
+
+//2
 builder.Services.AddMarten(opts =>
 {
     opts.Connection(builder.Configuration.GetConnectionString("Database")!);
 }).UseLightweightSessions();
 
+//3
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("Frontend", policy =>
