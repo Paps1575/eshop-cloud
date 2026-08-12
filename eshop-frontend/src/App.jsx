@@ -3,10 +3,10 @@ import Basket from './components/Basket'
 import OrderConfirmation from './components/OrderConfirmation'
 import ProductForm from './components/ProductForm'
 import ProductList from './components/ProductList'
+import { showAlert, showToast } from './services/alerts'
 
 function App() {
   const [userName, setUserName] = useState('cesar')
-  const [status, setStatus] = useState({ message: '', type: 'info' })
   const [refreshKey, setRefreshKey] = useState(0)
   const [confirmedOrder, setConfirmedOrder] = useState(null)
   const [cart, setCart] = useState({
@@ -14,13 +14,22 @@ function App() {
     items: [],
   })
 
-  function showStatus(message, type = 'info') {
-    setStatus({ message, type })
+  function notify(message, type = 'info') {
+    if (!message) {
+      return
+    }
+
+    if (type === 'success') {
+      showToast(message, type)
+      return
+    }
+
+    showAlert(message, type)
   }
 
   function handleAddToBasket(product) {
-    showStatus('')
     setConfirmedOrder(null)
+    showToast(`${product.name} agregado a la cesta.`, 'success')
     setCart((currentCart) => {
       const existingItem = currentCart.items.find((item) => item.productId === product.id)
 
@@ -63,13 +72,13 @@ function App() {
   }
 
   function handleClearBasket() {
-    showStatus('')
     setConfirmedOrder(null)
     setCart({ userName, items: [] })
+    showToast('Cesta vaciada correctamente.', 'info')
   }
 
   function handleCheckoutSuccess(order) {
-    showStatus('Compra confirmada. Revisa el resumen de tu orden.', 'success')
+    showAlert('Tu orden fue generada correctamente. El recibo quedó visible en pantalla.', 'success', 'Compra confirmada')
     setConfirmedOrder(order)
     setCart({ userName, items: [] })
   }
@@ -93,13 +102,11 @@ function App() {
         </label>
       </header>
 
-      {status.message && <p className={`message ${status.type}`}>{status.message}</p>}
-
       <OrderConfirmation order={confirmedOrder} onClose={() => setConfirmedOrder(null)} />
 
       <ProductForm
         onCreated={() => setRefreshKey((currentKey) => currentKey + 1)}
-        onStatus={showStatus}
+        onStatus={notify}
       />
 
       <div className="content-grid">
@@ -110,7 +117,7 @@ function App() {
           onQuantityChange={handleQuantityChange}
           onClearBasket={handleClearBasket}
           onCheckoutSuccess={handleCheckoutSuccess}
-          onSaved={showStatus}
+          onSaved={notify}
         />
       </div>
     </main>
