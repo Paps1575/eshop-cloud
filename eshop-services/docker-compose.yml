@@ -5,6 +5,9 @@ services:
     image: postgres:15
   basketdb:
     image: postgres:15
+  mongodb:
+    image: mongo:7
 volumes:
   catalogdbdata:
-  posgres_basket:  
+  posgres_basket:
+  mongodbdata:

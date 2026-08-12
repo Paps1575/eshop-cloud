@@ -1,4 +1,4 @@
-import { saveBasket } from '../services/api'
+import { createOrder, saveBasket } from '../services/api'
 
 function Basket({ cart, userName, onQuantityChange, onClearBasket, onSaved }) {
   const totalPrice = cart.items.reduce((total, item) => total + item.price * item.quantity, 0)
@@ -19,6 +19,26 @@ function Basket({ cart, userName, onQuantityChange, onClearBasket, onSaved }) {
       onSaved('Cesta guardada correctamente.')
     } catch {
       onSaved('No se pudo guardar la cesta. Intenta nuevamente en unos minutos.')
+    }
+  }
+
+  async function handleCheckout() {
+    if (!userName.trim()) {
+      onSaved('Ingresa un usuario antes de realizar la compra.')
+      return
+    }
+
+    if (cart.items.length === 0) {
+      onSaved('Agrega al menos un producto antes de realizar la compra.')
+      return
+    }
+
+    try {
+      await saveBasket({ ...cart, userName })
+      const order = await createOrder(userName, userName)
+      onSaved(`Compra confirmada. Orden ${order.id} por $${Number(order.total).toFixed(2)}.`)
+    } catch {
+      onSaved('No se pudo generar la compra. Intenta nuevamente en unos minutos.')
     }
   }
 
@@ -61,6 +81,9 @@ function Basket({ cart, userName, onQuantityChange, onClearBasket, onSaved }) {
       <div className="basket-actions">
         <button type="button" onClick={handleSaveBasket}>
           Guardar cesta
+        </button>
+        <button type="button" onClick={handleCheckout}>
+          Realizar compra
         </button>
         <button className="secondary" type="button" onClick={onClearBasket}>
           Vaciar

@@ -27,6 +27,14 @@ services:
     volumes:
       - posgres_basket:/var/lib/postgresql/data/
 
+  mongodb:
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodbdata:/data/db
+
 
 
   catalog.api:
@@ -65,3 +73,20 @@ services:
     depends_on:
       - basketdb
       - redis
+
+  ordering.api:
+    container_name: ordering.api
+    build:
+      context: .
+      dockerfile: src/Ordering/Ordering.API/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__Mongo=mongodb://mongodb:27017
+      - Mongo__DatabaseName=OrderingDb
+      - Mongo__OrdersCollection=orders
+      - Services__BasketUrl=http://basket.api:8080
+    ports:
+      - "8083:8080"
+    depends_on:
+      - mongodb
+      - basket.api
