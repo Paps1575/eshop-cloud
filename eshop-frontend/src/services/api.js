@@ -17,6 +17,11 @@ export async function getProducts() {
   return response.data.data ?? []
 }
 
+export async function createProduct(product) {
+  const response = await catalogApi.post('/products', product)
+  return response.data
+}
+
 export async function getBasket(userName) {
   const response = await basketApi.get(`/basket/${userName}`)
   return response.data.cart

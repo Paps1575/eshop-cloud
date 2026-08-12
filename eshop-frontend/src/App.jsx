@@ -1,17 +1,23 @@
 import { useState } from 'react'
 import Basket from './components/Basket'
+import ProductForm from './components/ProductForm'
 import ProductList from './components/ProductList'
 
 function App() {
   const [userName, setUserName] = useState('cesar')
-  const [status, setStatus] = useState('')
+  const [status, setStatus] = useState({ message: '', type: 'info' })
+  const [refreshKey, setRefreshKey] = useState(0)
   const [cart, setCart] = useState({
     userName: 'cesar',
     items: [],
   })
 
+  function showStatus(message, type = 'info') {
+    setStatus({ message, type })
+  }
+
   function handleAddToBasket(product) {
-    setStatus('')
+    showStatus('')
     setCart((currentCart) => {
       const existingItem = currentCart.items.find((item) => item.productId === product.id)
 
@@ -54,7 +60,12 @@ function App() {
   }
 
   function handleClearBasket() {
-    setStatus('')
+    showStatus('')
+    setCart({ userName, items: [] })
+  }
+
+  function handleCheckoutSuccess(message) {
+    showStatus(message, 'success')
     setCart({ userName, items: [] })
   }
 
@@ -77,16 +88,22 @@ function App() {
         </label>
       </header>
 
-      {status && <p className="message success">{status}</p>}
+      {status.message && <p className={`message ${status.type}`}>{status.message}</p>}
+
+      <ProductForm
+        onCreated={() => setRefreshKey((currentKey) => currentKey + 1)}
+        onStatus={showStatus}
+      />
 
       <div className="content-grid">
-        <ProductList onAddToBasket={handleAddToBasket} />
+        <ProductList onAddToBasket={handleAddToBasket} refreshKey={refreshKey} />
         <Basket
           cart={{ ...cart, userName }}
           userName={userName}
           onQuantityChange={handleQuantityChange}
           onClearBasket={handleClearBasket}
-          onSaved={setStatus}
+          onCheckoutSuccess={handleCheckoutSuccess}
+          onSaved={showStatus}
         />
       </div>
     </main>

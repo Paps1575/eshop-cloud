@@ -17,7 +17,8 @@ body {
 }
 
 button,
-input {
+input,
+textarea {
   font: inherit;
 }
 
@@ -40,10 +41,27 @@ button:hover {
   transform: translateY(-1px);
 }
 
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+  transform: none;
+}
+
 button.secondary {
   background: #e8f1ff;
   box-shadow: none;
   color: #0b5ed7;
+}
+
+button.ghost {
+  background: transparent;
+  border: 1px solid #cfe0f6;
+  box-shadow: none;
+  color: #475569;
+}
+
+button.checkout-button {
+  background: linear-gradient(135deg, #0b5ed7 0%, #0648a6 100%);
 }
 
 .app-shell {
@@ -94,19 +112,66 @@ button.secondary {
 }
 
 .user-box input,
-.basket-item input {
+.basket-item input,
+.product-form input,
+.product-form textarea {
   background: #fff;
   border: 1px solid #cfe0f6;
   border-radius: 12px;
   color: #172033;
   outline: none;
   padding: 0.75rem;
+  resize: vertical;
 }
 
 .user-box input:focus,
-.basket-item input:focus {
+.basket-item input:focus,
+.product-form input:focus,
+.product-form textarea:focus {
   border-color: #0b5ed7;
   box-shadow: 0 0 0 4px rgba(11, 94, 215, 0.12);
+}
+
+.product-form-panel {
+  margin-bottom: 1.5rem;
+}
+
+.form-header {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.form-header .section-heading {
+  margin-bottom: 0;
+}
+
+.product-form {
+  border-top: 1px solid #e3ecf7;
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+}
+
+.product-form label {
+  color: #475569;
+  display: grid;
+  font-size: 0.92rem;
+  font-weight: 700;
+  gap: 0.45rem;
+}
+
+.form-row {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(0, 1fr) 180px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .content-grid {
@@ -142,7 +207,7 @@ button.secondary {
 .product-grid {
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
 
 .product-card {
@@ -152,6 +217,7 @@ button.secondary {
   box-shadow: 0 10px 26px rgba(15, 71, 138, 0.06);
   display: grid;
   gap: 1rem;
+  grid-template-rows: auto 1fr auto;
   padding: 1rem;
   transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
 }
@@ -183,6 +249,23 @@ button.secondary {
 .basket-item h3 {
   color: #0f1f38;
   margin: 0;
+}
+
+.product-info {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.product-footer {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-top: auto;
+}
+
+.product-footer strong {
+  color: #0b5ed7;
+  font-size: 1.25rem;
 }
 
 .product-info p,
@@ -262,6 +345,10 @@ button.secondary {
   padding: 1rem;
 }
 
+.message.info {
+  background: #f8fbff;
+}
+
 .message.error {
   background: #fef2f2;
   border-color: #fecaca;
@@ -269,9 +356,9 @@ button.secondary {
 }
 
 .message.success {
-  background: #eff6ff;
-  border-color: #bfdbfe;
-  color: #0b5ed7;
+  background: #ecfdf5;
+  border-color: #bbf7d0;
+  color: #047857;
   margin-bottom: 1rem;
 }
 
@@ -281,7 +368,8 @@ button.secondary {
   }
 
   .hero,
-  .content-grid {
+  .content-grid,
+  .form-row {
     grid-template-columns: 1fr;
   }
 
@@ -292,5 +380,10 @@ button.secondary {
 
   .basket-panel {
     position: static;
+  }
+
+  .form-header {
+    align-items: stretch;
+    display: grid;
   }
 }

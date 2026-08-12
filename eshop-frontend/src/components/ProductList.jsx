@@ -1,28 +1,31 @@
 import { useEffect, useState } from 'react'
 import { getProducts } from '../services/api'
 
-function ProductList({ onAddToBasket }) {
+function ProductList({ onAddToBasket, refreshKey }) {
   const [products, setProducts] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState('')
 
   useEffect(() => {
     async function loadProducts() {
+      setIsLoading(true)
+      setError('')
+
       try {
         const data = await getProducts()
         setProducts(data)
       } catch {
-        setError('No se pudo cargar el catalogo de productos. Intenta nuevamente en unos minutos.')
+        setError('No se pudo cargar el catálogo de productos. Intenta nuevamente en unos minutos.')
       } finally {
         setIsLoading(false)
       }
     }
 
     loadProducts()
-  }, [])
+  }, [refreshKey])
 
   if (isLoading) {
-    return <p className="message">Cargando productos...</p>
+    return <p className="message info">Cargando productos...</p>
   }
 
   if (error) {
@@ -32,8 +35,8 @@ function ProductList({ onAddToBasket }) {
   return (
     <section className="panel">
       <div className="section-heading">
-        <span>Coleccion</span>
-        <h2>Catalogo</h2>
+        <span>Colección</span>
+        <h2>Catálogo</h2>
       </div>
 
       <div className="product-grid">
@@ -54,7 +57,9 @@ function ProductList({ onAddToBasket }) {
                   <span key={category}>{category}</span>
                 ))}
               </div>
-              <strong>${Number(product.price).toFixed(2)}</strong>
+              <div className="product-footer">
+                <strong>${Number(product.price).toFixed(2)}</strong>
+              </div>
             </div>
             <button type="button" onClick={() => onAddToBasket(product)}>
               Agregar a la cesta
