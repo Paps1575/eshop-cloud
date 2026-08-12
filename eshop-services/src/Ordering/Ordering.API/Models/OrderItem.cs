@@ -1,7 +1,11 @@
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+
 namespace Ordering.API.Models;
 
 public class OrderItem
 {
+    [BsonGuidRepresentation(GuidRepresentation.Standard)]
     public Guid ProductId { get; set; }
     public string ProductName { get; set; } = default!;
     public int Quantity { get; set; }
