@@ -362,6 +362,120 @@ button.checkout-button {
   margin-bottom: 1rem;
 }
 
+.order-confirmation {
+  margin-bottom: 1.5rem;
+}
+
+.order-card {
+  background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+  border: 1px solid #bfdbfe;
+  border-radius: 22px;
+  box-shadow: 0 22px 52px rgba(15, 71, 138, 0.14);
+  padding: 1.35rem;
+}
+
+.order-header {
+  align-items: start;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.order-eyebrow {
+  color: #047857;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.order-header h2 {
+  color: #0f1f38;
+  font-size: clamp(1.6rem, 3vw, 2.35rem);
+  letter-spacing: -0.04em;
+  margin: 0.25rem 0;
+}
+
+.order-header p {
+  color: #64748b;
+  margin: 0;
+  word-break: break-all;
+}
+
+.order-meta,
+.order-totals {
+  display: grid;
+  gap: 0.85rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 1rem;
+}
+
+.order-meta div,
+.order-totals div {
+  background: #fff;
+  border: 1px solid #e3ecf7;
+  border-radius: 16px;
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.9rem;
+}
+
+.order-meta span,
+.order-totals span,
+.order-item span {
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+.order-meta strong,
+.order-totals strong,
+.order-item strong {
+  color: #0f1f38;
+}
+
+.order-items {
+  border-top: 1px solid #e3ecf7;
+  display: grid;
+  gap: 0.85rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+}
+
+.order-items h3 {
+  color: #0f1f38;
+  margin: 0;
+}
+
+.order-item {
+  align-items: center;
+  background: #fff;
+  border: 1px solid #e3ecf7;
+  border-radius: 16px;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.order-item > div {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.order-item-price {
+  text-align: right;
+}
+
+.order-grand-total {
+  background: #0b5ed7 !important;
+  border-color: #0b5ed7 !important;
+}
+
+.order-grand-total span,
+.order-grand-total strong {
+  color: #fff;
+}
+
 @media (max-width: 860px) {
   .app-shell {
     padding: 1rem;
@@ -369,7 +483,9 @@ button.checkout-button {
 
   .hero,
   .content-grid,
-  .form-row {
+  .form-row,
+  .order-meta,
+  .order-totals {
     grid-template-columns: 1fr;
   }
 
@@ -385,5 +501,14 @@ button.checkout-button {
   .form-header {
     align-items: stretch;
     display: grid;
+  }
+
+  .order-header,
+  .order-item {
+    display: grid;
+  }
+
+  .order-item-price {
+    text-align: left;
   }
 }

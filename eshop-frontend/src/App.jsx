@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Basket from './components/Basket'
+import OrderConfirmation from './components/OrderConfirmation'
 import ProductForm from './components/ProductForm'
 import ProductList from './components/ProductList'
 
@@ -7,6 +8,7 @@ function App() {
   const [userName, setUserName] = useState('cesar')
   const [status, setStatus] = useState({ message: '', type: 'info' })
   const [refreshKey, setRefreshKey] = useState(0)
+  const [confirmedOrder, setConfirmedOrder] = useState(null)
   const [cart, setCart] = useState({
     userName: 'cesar',
     items: [],
@@ -18,6 +20,7 @@ function App() {
 
   function handleAddToBasket(product) {
     showStatus('')
+    setConfirmedOrder(null)
     setCart((currentCart) => {
       const existingItem = currentCart.items.find((item) => item.productId === product.id)
 
@@ -61,11 +64,13 @@ function App() {
 
   function handleClearBasket() {
     showStatus('')
+    setConfirmedOrder(null)
     setCart({ userName, items: [] })
   }
 
-  function handleCheckoutSuccess(message) {
-    showStatus(message, 'success')
+  function handleCheckoutSuccess(order) {
+    showStatus('Compra confirmada. Revisa el resumen de tu orden.', 'success')
+    setConfirmedOrder(order)
     setCart({ userName, items: [] })
   }
 
@@ -89,6 +94,8 @@ function App() {
       </header>
 
       {status.message && <p className={`message ${status.type}`}>{status.message}</p>}
+
+      <OrderConfirmation order={confirmedOrder} onClose={() => setConfirmedOrder(null)} />
 
       <ProductForm
         onCreated={() => setRefreshKey((currentKey) => currentKey + 1)}

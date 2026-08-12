@@ -45,7 +45,7 @@ function Basket({ cart, userName, onQuantityChange, onClearBasket, onCheckoutSuc
     try {
       await saveBasket({ ...cart, userName })
       const order = await createOrder(userName, userName)
-      onCheckoutSuccess(`Compra confirmada. Orden ${order.id} por $${Number(order.total).toFixed(2)}.`)
+      onCheckoutSuccess(order)
     } catch {
       onSaved('No se pudo generar la compra. Intenta nuevamente en unos minutos.', 'error')
     } finally {
