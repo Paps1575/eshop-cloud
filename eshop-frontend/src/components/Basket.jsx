@@ -1,42 +1,19 @@
 import { useState } from 'react'
 import { createOrder, saveBasket } from '../services/api'
 
-function Basket({ cart, userName, onQuantityChange, onClearBasket, onCheckoutSuccess, onSaved }) {
+function Basket({ cart, onBackToCatalog, onQuantityChange, onRemoveItem, onClearBasket, onGetCustomer, onCheckoutSuccess, onSaved }) {
   const [pendingAction, setPendingAction] = useState('')
   const totalPrice = cart.items.reduce((total, item) => total + item.price * item.quantity, 0)
   const isBusy = Boolean(pendingAction)
 
-  async function handleSaveBasket() {
-    if (!userName.trim()) {
-      onSaved('Ingresa un usuario antes de guardar la cesta.', 'error')
-      return
-    }
-
-    if (cart.items.length === 0) {
-      onSaved('Agrega al menos un producto antes de guardar la cesta.', 'error')
-      return
-    }
-
-    setPendingAction('save')
-
-    try {
-      await saveBasket({ ...cart, userName })
-      onSaved('Cesta guardada correctamente.', 'success')
-    } catch {
-      onSaved('No se pudo guardar la cesta. Intenta nuevamente en unos minutos.', 'error')
-    } finally {
-      setPendingAction('')
-    }
-  }
-
   async function handleCheckout() {
-    if (!userName.trim()) {
-      onSaved('Ingresa un usuario antes de realizar la compra.', 'error')
-      return
-    }
-
     if (cart.items.length === 0) {
       onSaved('Agrega al menos un producto antes de realizar la compra.', 'error')
+      return
+    }
+
+    const userName = await onGetCustomer()
+    if (!userName) {
       return
     }
 
@@ -54,10 +31,15 @@ function Basket({ cart, userName, onQuantityChange, onClearBasket, onCheckoutSuc
   }
 
   return (
-    <aside className="panel basket-panel">
-      <div className="section-heading">
-        <span>Resumen</span>
-        <h2>Cesta</h2>
+    <section className="panel basket-panel cart-view">
+      <div className="cart-view-header">
+        <div className="section-heading">
+          <span>Carrito</span>
+          <h2>Tu carrito de compras</h2>
+        </div>
+        <button className="secondary" type="button" onClick={onBackToCatalog}>
+          Volver al catálogo
+        </button>
       </div>
 
       {cart.items.length === 0 ? (
@@ -79,6 +61,9 @@ function Basket({ cart, userName, onQuantityChange, onClearBasket, onCheckoutSuc
                   onChange={(event) => onQuantityChange(item.productId, Number(event.target.value))}
                 />
               </label>
+              <button className="ghost" type="button" onClick={() => onRemoveItem(item.productId)} disabled={isBusy}>
+                Eliminar
+              </button>
             </div>
           ))}
         </div>
@@ -97,7 +82,7 @@ function Basket({ cart, userName, onQuantityChange, onClearBasket, onCheckoutSuc
           Vaciar
         </button>
       </div>
-    </aside>
+    </section>
   )
 }
 

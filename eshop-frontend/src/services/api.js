@@ -12,6 +12,10 @@ const orderingApi = axios.create({
   baseURL: import.meta.env.VITE_ORDERING_URL || 'http://localhost:8083',
 })
 
+const ticketApi = axios.create({
+  baseURL: import.meta.env.VITE_TICKET_URL || 'http://localhost:8084',
+})
+
 export async function getProducts() {
   const response = await catalogApi.get('/products')
   return response.data.data ?? []
@@ -46,4 +50,24 @@ export async function createOrder(customerId, basketId) {
   )
 
   return response.data
+}
+
+export function getOrderTicketUrl(orderId, mode = 'inline') {
+  const path = mode === 'download' ? 'download' : 'pdf'
+  return `${ticketApi.defaults.baseURL}/api/tickets/orders/${orderId}/${path}`
+}
+
+export async function downloadOrderTicket(orderId) {
+  const response = await ticketApi.get(`/api/tickets/orders/${orderId}/download`, {
+    responseType: 'blob',
+  })
+
+  const url = URL.createObjectURL(response.data)
+  const link = document.createElement('a')
+  link.href = url
+  link.download = `orden-${orderId}.pdf`
+  document.body.appendChild(link)
+  link.click()
+  link.remove()
+  URL.revokeObjectURL(url)
 }

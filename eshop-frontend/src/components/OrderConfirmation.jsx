@@ -1,3 +1,6 @@
+import { downloadOrderTicket, getOrderTicketUrl } from '../services/api'
+import { showAlert } from '../services/alerts'
+
 function OrderConfirmation({ order, onClose }) {
   if (!order) {
     return null
@@ -7,6 +10,18 @@ function OrderConfirmation({ order, onClose }) {
     dateStyle: 'medium',
     timeStyle: 'short',
   })
+
+  function handleOpenPdf() {
+    window.open(getOrderTicketUrl(order.id), '_blank', 'noopener,noreferrer')
+  }
+
+  async function handleDownloadPdf() {
+    try {
+      await downloadOrderTicket(order.id)
+    } catch {
+      showAlert('No se pudo descargar el ticket. Intenta nuevamente en unos minutos.', 'error')
+    }
+  }
 
   return (
     <section className="order-confirmation">
@@ -66,6 +81,15 @@ function OrderConfirmation({ order, onClose }) {
             <span>Total</span>
             <strong>${Number(order.total).toFixed(2)}</strong>
           </div>
+        </div>
+
+        <div className="order-actions">
+          <button type="button" onClick={handleOpenPdf}>
+            Ver / imprimir PDF
+          </button>
+          <button className="secondary" type="button" onClick={handleDownloadPdf}>
+            Descargar PDF
+          </button>
         </div>
       </div>
     </section>

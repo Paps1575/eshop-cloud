@@ -90,3 +90,16 @@ services:
     depends_on:
       - mongodb
       - basket.api
+
+  ticket.api:
+    container_name: ticket.api
+    build:
+      context: .
+      dockerfile: src/Ticket/Ticket.API/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - Services__OrderingUrl=http://ordering.api:8080
+    ports:
+      - "8084:8080"
+    depends_on:
+      - ordering.api

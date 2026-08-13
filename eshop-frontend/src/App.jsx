@@ -3,16 +3,18 @@ import Basket from './components/Basket'
 import OrderConfirmation from './components/OrderConfirmation'
 import ProductForm from './components/ProductForm'
 import ProductList from './components/ProductList'
-import { showAlert, showToast } from './services/alerts'
+import { promptCustomerName, showAlert, showToast } from './services/alerts'
 
 function App() {
-  const [userName, setUserName] = useState('cesar')
   const [refreshKey, setRefreshKey] = useState(0)
   const [confirmedOrder, setConfirmedOrder] = useState(null)
+  const [view, setView] = useState('catalog')
   const [cart, setCart] = useState({
-    userName: 'cesar',
+    userName: '',
     items: [],
   })
+
+  const cartItemCount = cart.items.reduce((total, item) => total + item.quantity, 0)
 
   function notify(message, type = 'info') {
     if (!message) {
@@ -36,7 +38,6 @@ function App() {
       if (existingItem) {
         return {
           ...currentCart,
-          userName,
           items: currentCart.items.map((item) =>
             item.productId === product.id ? { ...item, quantity: item.quantity + 1 } : item,
           ),
@@ -45,7 +46,6 @@ function App() {
 
       return {
         ...currentCart,
-        userName,
         items: [
           ...currentCart.items,
           {
@@ -71,16 +71,34 @@ function App() {
     }))
   }
 
+  function handleRemoveItem(productId) {
+    setCart((currentCart) => ({
+      ...currentCart,
+      items: currentCart.items.filter((item) => item.productId !== productId),
+    }))
+  }
+
   function handleClearBasket() {
     setConfirmedOrder(null)
-    setCart({ userName, items: [] })
+    setCart({ userName: '', items: [] })
     showToast('Cesta vaciada correctamente.', 'info')
   }
 
   function handleCheckoutSuccess(order) {
     showAlert('Tu orden fue generada correctamente. El recibo quedó visible en pantalla.', 'success', 'Compra confirmada')
     setConfirmedOrder(order)
-    setCart({ userName, items: [] })
+    setCart({ userName: '', items: [] })
+    setView('catalog')
+  }
+
+  async function handleGetCustomer() {
+    const userName = await promptCustomerName()
+
+    if (userName) {
+      setCart((currentCart) => ({ ...currentCart, userName }))
+    }
+
+    return userName
   }
 
   return (
@@ -88,38 +106,36 @@ function App() {
       <header className="hero">
         <div>
           <h1>eShop Cloud</h1>
-          <p>Productos seleccionados con una experiencia de compra simple y segura.</p>
+          <p>Agrega productos al carrito, revisa tu compra y genera tu ticket en PDF.</p>
         </div>
-        <label className="user-box">
-          Cliente
-          <input
-            value={userName}
-            onChange={(event) => {
-              setUserName(event.target.value)
-              setCart((currentCart) => ({ ...currentCart, userName: event.target.value }))
-            }}
-          />
-        </label>
+        <button className="cart-toggle" type="button" onClick={() => setView('cart')}>
+          Ver carrito
+          <span>{cartItemCount}</span>
+        </button>
       </header>
 
       <OrderConfirmation order={confirmedOrder} onClose={() => setConfirmedOrder(null)} />
 
-      <ProductForm
-        onCreated={() => setRefreshKey((currentKey) => currentKey + 1)}
-        onStatus={notify}
-      />
-
-      <div className="content-grid">
-        <ProductList onAddToBasket={handleAddToBasket} refreshKey={refreshKey} />
+      {view === 'catalog' ? (
+        <>
+          <ProductForm
+            onCreated={() => setRefreshKey((currentKey) => currentKey + 1)}
+            onStatus={notify}
+          />
+          <ProductList onAddToBasket={handleAddToBasket} refreshKey={refreshKey} />
+        </>
+      ) : (
         <Basket
-          cart={{ ...cart, userName }}
-          userName={userName}
+          cart={cart}
+          onBackToCatalog={() => setView('catalog')}
           onQuantityChange={handleQuantityChange}
+          onRemoveItem={handleRemoveItem}
           onClearBasket={handleClearBasket}
+          onGetCustomer={handleGetCustomer}
           onCheckoutSuccess={handleCheckoutSuccess}
           onSaved={notify}
         />
-      </div>
+      )}
     </main>
   )
 }
