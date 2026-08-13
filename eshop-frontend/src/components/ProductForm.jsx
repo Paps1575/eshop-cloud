@@ -97,10 +97,12 @@ function ProductForm({ onCreated, onStatus }) {
             </label>
           </div>
 
-          <label>
-            Imagen URL
-            <input name="imageFile" value={form.imageFile} onChange={handleChange} placeholder="https://..." />
-          </label>
+          <div className="form-row">
+            <label>
+              Imagen URL
+              <input name="imageFile" value={form.imageFile} onChange={handleChange} placeholder="https://..." />
+            </label>
+          </div>
 
           <div className="form-actions">
             <button type="submit" disabled={isSaving}>

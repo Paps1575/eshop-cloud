@@ -33,10 +33,11 @@ function ProductList({ onAddToBasket, refreshKey }) {
   }
 
   return (
-    <section className="panel">
+    <section className="panel catalog-panel">
       <div className="section-heading">
         <span>Colección</span>
         <h2>Catálogo</h2>
+        <p>Selecciona productos y agrégalos al carrito para continuar con la compra.</p>
       </div>
 
       <div className="product-grid">
@@ -61,8 +62,8 @@ function ProductList({ onAddToBasket, refreshKey }) {
                 <strong>${Number(product.price).toFixed(2)}</strong>
               </div>
             </div>
-            <button type="button" onClick={() => onAddToBasket(product)}>
-              Agregar a la cesta
+            <button className="card-action" type="button" onClick={() => onAddToBasket(product)}>
+              Agregar al carrito
             </button>
           </article>
         ))}

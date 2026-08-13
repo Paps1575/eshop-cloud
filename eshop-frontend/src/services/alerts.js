@@ -35,26 +35,3 @@ export function showToast(message, type = 'success') {
     timerProgressBar: true,
   })
 }
-
-export async function promptCustomerName() {
-  const result = await Swal.fire({
-    ...baseOptions,
-    title: 'Finalizar compra',
-    text: 'Ingresa el usuario que quedara asociado a la orden.',
-    input: 'text',
-    inputLabel: 'Usuario',
-    inputPlaceholder: 'Ej. cesar',
-    showCancelButton: true,
-    confirmButtonText: 'Generar orden',
-    cancelButtonText: 'Cancelar',
-    inputValidator: (value) => {
-      if (!value?.trim()) {
-        return 'El usuario es obligatorio para realizar la compra.'
-      }
-
-      return null
-    },
-  })
-
-  return result.isConfirmed ? result.value.trim() : null
-}

@@ -3,7 +3,7 @@ import Basket from './components/Basket'
 import ProductForm from './components/ProductForm'
 import ProductList from './components/ProductList'
 import { downloadOrderTicket, getOrderTicketUrl } from './services/api'
-import { promptCustomerName, showAlert, showToast } from './services/alerts'
+import { showAlert, showToast } from './services/alerts'
 
 function App() {
   const [refreshKey, setRefreshKey] = useState(0)
@@ -49,6 +49,7 @@ function App() {
           {
             productId: product.id,
             productName: product.name,
+            imageFile: product.imageFile,
             price: product.price,
             quantity: 1,
             color: 'Default',
@@ -95,16 +96,6 @@ function App() {
     }
   }
 
-  async function handleGetCustomer() {
-    const userName = await promptCustomerName()
-
-    if (userName) {
-      setCart((currentCart) => ({ ...currentCart, userName }))
-    }
-
-    return userName
-  }
-
   return (
     <main className="app-shell">
       <header className="hero">
@@ -133,7 +124,6 @@ function App() {
           onQuantityChange={handleQuantityChange}
           onRemoveItem={handleRemoveItem}
           onClearBasket={handleClearBasket}
-          onGetCustomer={handleGetCustomer}
           onCheckoutSuccess={handleCheckoutSuccess}
           onSaved={notify}
         />
