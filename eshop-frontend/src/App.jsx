@@ -1,13 +1,12 @@
 import { useState } from 'react'
 import Basket from './components/Basket'
-import OrderConfirmation from './components/OrderConfirmation'
 import ProductForm from './components/ProductForm'
 import ProductList from './components/ProductList'
+import { downloadOrderTicket, getOrderTicketUrl } from './services/api'
 import { promptCustomerName, showAlert, showToast } from './services/alerts'
 
 function App() {
   const [refreshKey, setRefreshKey] = useState(0)
-  const [confirmedOrder, setConfirmedOrder] = useState(null)
   const [view, setView] = useState('catalog')
   const [cart, setCart] = useState({
     userName: '',
@@ -30,7 +29,6 @@ function App() {
   }
 
   function handleAddToBasket(product) {
-    setConfirmedOrder(null)
     showToast(`${product.name} agregado a la cesta.`, 'success')
     setCart((currentCart) => {
       const existingItem = currentCart.items.find((item) => item.productId === product.id)
@@ -79,16 +77,22 @@ function App() {
   }
 
   function handleClearBasket() {
-    setConfirmedOrder(null)
     setCart({ userName: '', items: [] })
     showToast('Cesta vaciada correctamente.', 'info')
   }
 
-  function handleCheckoutSuccess(order) {
-    showAlert('Tu orden fue generada correctamente. El recibo quedó visible en pantalla.', 'success', 'Compra confirmada')
-    setConfirmedOrder(order)
+  async function handleCheckoutSuccess(order) {
     setCart({ userName: '', items: [] })
     setView('catalog')
+
+    window.open(getOrderTicketUrl(order.id), '_blank', 'noopener,noreferrer')
+
+    try {
+      await downloadOrderTicket(order.id)
+      showAlert('Tu orden fue generada correctamente. Abrimos el PDF en otra pestaña y tambien se descargo.', 'success', 'Compra confirmada')
+    } catch {
+      showAlert('Tu orden fue generada correctamente, pero no se pudo descargar el PDF automaticamente.', 'warning', 'Compra confirmada')
+    }
   }
 
   async function handleGetCustomer() {
@@ -113,8 +117,6 @@ function App() {
           <span>{cartItemCount}</span>
         </button>
       </header>
-
-      <OrderConfirmation order={confirmedOrder} onClose={() => setConfirmedOrder(null)} />
 
       {view === 'catalog' ? (
         <>
